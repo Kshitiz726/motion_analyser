@@ -1,0 +1,9 @@
+opencv-python
+numpy
+pandas
+matplotlib
+flask
+dash
+tensorflow
+torch
+yolov5

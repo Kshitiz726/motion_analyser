@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Analysis Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJX3QJtU9mR+4uS38A4gojxL7nS4Z9vbZ1nSvlqzEyjBnxwAzKzpD3tldF2g" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* General body styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #ffffff;
+            color: #333333;
+            border-bottom: 1px solid #e1e1e1;
+            padding: 15px 30px;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        /* Grid container */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+            padding: 20px;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        /* Card styling */
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .card .classification-text {
+            font-size: 16px;
+            margin-top: 15px;
+            color: #333;
+            text-align: left;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 25px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+            font-weight: bold;
+        }
+
+
+
+
+
+
+
+
+        /* Ensuring the row is displayed horizontally */
+.row {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start; /* Align to the left */
+}
+
+/* Each column (left and right) should take up equal space and have a specific width/height */
+.col {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 45%; /* Adjust width as needed */
+    height: 300px; /* Set a fixed height for both frames */
+    overflow: hidden; /* Ensure the content fits inside the container */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Ensure images are responsive within the columns */
+.card img {
+    width: 100%;
+    height: auto;
+    max-height: 100%; /* Ensure the image is not taller than the container */
+    object-fit: cover; /* Ensures the image covers the frame without distortion */
+}
+
+/* Additional spacing to separate the card */
+.card {
+    margin: 0 10px;
+    padding: 20px;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <h1 class="navbar-brand">Motion Analyser</h1>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Speed Analysis (larger width) -->
+        <div class="card">
+            <h2>Speed Analysis</h2>
+            <img src="{{ url_for('speed_analysis_feed') }}" alt="Speed Analysis Feed">
+        </div>
+
+        <!-- Motion Detection -->
+        <div class="card">
+            <h2>Motion Detection</h2>
+            <img src="{{ url_for('motion_detection_feed') }}" alt="Motion Detection Feed">
+        </div>
+
+        
+        <div class="card">
+            <h2></h2>
+            <div class="row">
+                <!-- Left side for edge detection -->
+                <div class="col">
+                    <h3></h3>
+                    <img src="{{ url_for('edge_detection_feed') }}" alt="Edge Detection Feed">
+                </div>
+                <!-- Right side for color detection -->
+                <div class="col">
+                    <h3></h3>
+                    
+                    <label for="color-picker">Pick a Color:</label>
+<input type="color" id="color-picker" value="#ff0000" onchange="updateColor()">
+                    <div id="color-detection-feed">
+                        <img src="{{ url_for('color_detection_feed') }}" alt="Color Detection Feed">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            
+           
+        <!-- Heatmap -->
+        <div class="card">
+            <h2>Heatmap</h2>
+            <img src="{{ url_for('heatmap_feed') }}" alt="Heatmap Feed">
+        </div>
+    </div>
+
+
+
+
+  
+    
+    <script>
+        // Function to update object classification results and progress bar
+        function updateObjectClassification(data) {
+            const classificationDiv = document.getElementById("object-classification-feed");
+            const confidenceBar = document.getElementById("confidence-progress");
+    
+            // Clear the previous content
+            classificationDiv.innerHTML = "";
+            // Reset progress bar
+            confidenceBar.style.width = "0%";
+            confidenceBar.setAttribute("aria-valuenow", "0");
+    
+            // Loop through each object detected and update the UI
+            if (data && Array.isArray(data)) {
+                data.forEach(item => {
+                    // Display object and confidence percentage
+                    classificationDiv.innerHTML += `${item.object}: Confidence: ${item.confidence}%<br>`;
+    
+                    // Update the progress bar with the highest confidence
+                    if (item.confidence > 0) {
+                        confidenceBar.style.width = item.confidence + "%";
+                        confidenceBar.setAttribute("aria-valuenow", item.confidence);
+    
+                        // Change the color of the progress bar based on confidence
+                        if (item.confidence <= 30) {
+                            confidenceBar.classList.remove('bg-warning', 'bg-success');
+                            confidenceBar.classList.add('bg-danger');  // Red for low confidence
+                        } else if (item.confidence <= 60) {
+                            confidenceBar.classList.remove('bg-danger', 'bg-success');
+                            confidenceBar.classList.add('bg-warning');  // Yellow for medium confidence
+                        } else {
+                            confidenceBar.classList.remove('bg-danger', 'bg-warning');
+                            confidenceBar.classList.add('bg-success');  // Green for high confidence
+                        }
+                    }
+                });
+            }
+        }
+    
+        // Set an interval to fetch updated classification results from the server
+        setInterval(() => {
+            fetch('/object_classification_feed')
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => updateObjectClassification(data));
+        }, 1000); // Update every second
+    </script>
+
+<script>
+   function updateColor() {
+    const colorPicker = document.getElementById('color-picker');
+    const selectedColor = colorPicker.value;
+
+    console.log('Sending color:', selectedColor);
+
+    // Optionally, update the background or any other element to reflect the color change
+    document.getElementById('color-detection-feed').style.backgroundColor = selectedColor;
+
+    // Send the selected color to Flask using fetch
+    fetch('/update_color', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ color: selectedColor }) // Send the color as JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Color updated:', data.color);
+    })
+    .catch(error => console.error('Error updating color:', error));
+}
+
+</script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybN4v8+gfuTFf7F2F9mg5vK3P6q49OvlYz9iY1byfEKll7rF1l" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0ey7J6fuSxv8I0f5k6/9e5g8j5l0sw8aO1w2ioI9+pqVbbmBxupfrg0t" crossorigin="anonymous"></script>
+</body>
+</html>

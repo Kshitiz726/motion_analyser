@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Analytics Dashboard</title>
+</head>
+<body>
+    <h1>Analytics Dashboard</h1>
+
+    <!-- <div class="metrics">
+        <p>Average Speed of Objects: {{ avg_speed }}</p>
+        <p>Total Moving Objects Detected: {{ total_objects }}</p>
+        <p>Object Count per Category:</p>
+        <ul>
+            {% for category, count in object_count.items() %}
+                <li>{{ category }}: {{ count }}</li>
+            {% endfor %}
+        </ul>
+    </div> -->
+
+    <div class="heatmap-section">
+        <h2>Heatmap Visualization</h2>
+        <div>
+            <img src="/heatmap_feed" alt="Heatmap Feed" style="border: 2px solid black; width: 100%; max-width: 700px; height: auto;">
+        </div>
+    </div>
+</body>
+</html>
