@@ -1,3 +1,4 @@
+
 # 🚀 Motion Analysis Project 🎥
 
 Welcome to the **Motion Analysis Project**! This project detects and analyzes motion in video frames. Using custom Convolutional Neural Networks (CNN) and optical flow analysis, it detects moving objects, tracks them, and presents real-time analytics such as object speed, object count, and more—all within an interactive Flask web dashboard. 🖥️
@@ -34,125 +35,132 @@ Before running this project, make sure you have the following installed:
 
    ```bash
    git clone https://github.com/Kshitiz726/motion_analyser.git
-Navigate to the Project Directory
+   ```
 
-Move into the project folder:
+2. **Navigate to the Project Directory**
 
-bash
-Copy
-Edit
-cd motion_analyser
-Set Up a Virtual Environment (Optional but Recommended)
+   Move into the project folder:
 
-It's best to create a virtual environment to manage dependencies:
+   ```bash
+   cd motion_analyser
+   ```
 
-bash
-Copy
-Edit
-conda create --name motion_analysis python=3.8
-conda activate motion_analysis
-Install Dependencies
+3. **Set Up a Virtual Environment (Optional but Recommended)**
 
-Install all required packages using pip:
+   It's best to create a virtual environment to manage dependencies:
 
-bash
-Copy
-Edit
-pip install -r requirements.txt
-Prepare the Dataset
+   ```bash
+   conda create --name motion_analysis python=3.8
+   conda activate motion_analysis
+   ```
 
-Download the required dataset (e.g., UCF101 or DAVIS-2017 dataset for motion detection).
-Store it in the data/ directory, structured as:
-bash
-Copy
-Edit
-data/
-    raw/
-    processed/
-    training/
-    test/
-Set Up Git LFS (For Large Files)
+4. **Install Dependencies**
 
-If you're dealing with large files, like videos or images, consider setting up Git Large File Storage (LFS). Follow this guide for more details.
+   Install all required packages using pip:
 
-🏃‍♂️ Running the Program
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Prepare the Dataset**
+
+   Download the required dataset (e.g., UCF101 or DAVIS-2017 dataset for motion detection). Store it in the `data/` directory, structured as:
+
+   ```plaintext
+   data/
+       raw/
+       processed/
+       training/
+       test/
+   ```
+
+6. **Set Up Git LFS (For Large Files)**
+
+   If you're dealing with large files, like videos or images, consider setting up Git Large File Storage (LFS). Follow [this guide](https://git-lfs.github.com/) for more details.
+
+## 🏃‍♂️ Running the Program
+
 Once everything is set up, you can start the project by training the model and running the Flask app.
 
-1. Train the Model
+### 1. Train the Model
+
 To train the motion detection model, run:
 
-bash
-Copy
-Edit
+```bash
 python src/train_model.py
-This will use the dataset in the data/training/ folder to train the model.
+```
 
-2. Start the Flask Application
+This will use the dataset in the `data/training/` folder to train the model.
+
+### 2. Start the Flask Application
+
 After training the model, run the Flask application:
 
-bash
-Copy
-Edit
+```bash
 python src/app.py
-This starts the local server at http://127.0.0.1:5000/, where you can access the dashboard.
+```
 
-🌐 Accessing the Dashboard
-Main Dashboard
+This starts the local server at `http://127.0.0.1:5000/`, where you can access the dashboard.
+
+## 🌐 Accessing the Dashboard
+
+### Main Dashboard
+
 Once the app is running, open your web browser and visit:
 
-arduino
-Copy
-Edit
+```
 http://127.0.0.1:5000/
+```
+
 The dashboard will display:
 
-Motion Detection: Moving objects will be highlighted in green 🟩, non-moving in red 🟥.
-Speed Calculation: The average speed of moving objects will be displayed 🚗💨.
-Heatmap: Visualizes areas with motion 🔥.
-Analytics Page
+- **Motion Detection**: Moving objects will be highlighted in green 🟩, non-moving in red 🟥.
+- **Speed Calculation**: The average speed of moving objects will be displayed 🚗💨.
+- **Heatmap**: Visualizes areas with motion 🔥.
+
+### Analytics Page
+
 To view more detailed analytics, navigate to:
 
-arduino
-Copy
-Edit
+```
 http://127.0.0.1:5000/analytics
+```
+
 Here you’ll find:
 
-Average Speed of objects 🚀
-Object Count (e.g., total number of detected moving objects)
-Zone-wise Activity graphs 🗺️
-Speed Distribution graphs 📊
-🛠️ Usage
+- **Average Speed of objects** 🚀
+- **Object Count** (e.g., total number of detected moving objects)
+- **Zone-wise Activity graphs** 🗺️
+- **Speed Distribution graphs** 📊
+
+## 🛠️ Usage
+
 The project is built to work in real-time. Once the model is trained and the server is running, you can upload videos to analyze their motion.
 
-Motion Detection: Moving objects are detected and displayed in real-time 🏃‍♂️
-Speed Calculation: Displays the average speed of moving objects over time 🏎️
-Heatmap: A real-time heatmap of motion regions 🔥
-Object Classification: Detects and classifies objects in the video 🎯
-🤝 Contributing
+- **Motion Detection**: Moving objects are detected and displayed in real-time 🏃‍♂️
+- **Speed Calculation**: Displays the average speed of moving objects over time 🏎️
+- **Heatmap**: A real-time heatmap of motion regions 🔥
+- **Object Classification**: Detects and classifies objects in the video 🎯
+
+## 🤝 Contributing
+
 We welcome contributions to improve this project! Feel free to:
 
-Fork the repository 💡
-Create an issue to report bugs 🐞
-Submit a pull request with your changes 🔄
-For any contributions, please follow the GitHub contributing guide.
+1. Fork the repository 💡
+2. Create an issue to report bugs 🐞
+3. Submit a pull request with your changes 🔄
 
-📜 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+For any contributions, please follow the [GitHub contributing guide](CONTRIBUTING.md).
 
-🙏 Acknowledgments
-Thanks to UCF101 and DAVIS-2017 for providing the datasets 📂
-Special thanks to all the contributors who helped make this project a reality ✨
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Thanks to [UCF101](https://www.crcv.ucf.edu/data/UCF101.php) and [DAVIS-2017](https://davischallenge.org/davis2017/code.html) for providing the datasets 📂
+- Special thanks to all the contributors who helped make this project a reality ✨
+
+---
+
 🚀 Enjoy using the Motion Analysis Project! 🎉
-
-vbnet
-Copy
-Edit
-
-Simply copy everything above and paste it into your `README.md` file. Let me know if you'd like further customizations or changes! 😊
-
-
-
-
-
-
