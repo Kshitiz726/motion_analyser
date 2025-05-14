@@ -89,5 +89,3 @@ model = create_cnn_model(input_shape, num_classes)
 
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 criterion = nn.CrossEntropyLoss()
-
-
